@@ -9,21 +9,21 @@ function setup()
 
 function preload ()
 {
-    classifier = ml5.imageClassifier();
+    classifier = ml5.imageClassifier('DoodleNet');
 }
 
 function draw ()
 {
     strokeWeight(13);
     stroke(0);
-    if(mouseIsPresed){
+    if(mouseIsPressed){
         line(pmouseX,pmouseY, mouseX,mouseY);
     }
 }
 
 function classifyCanvas()
 {
-    classifier = classify(canvas,gotResult);
+    classifier.classify(canvas,gotResult);
 }
 
 function gotResult(error, results)
@@ -35,7 +35,7 @@ if(error)
 else{
     console.log(results);
     document.getElementById('label').innerHTML = 'Label: ' +results[0].label;
-    document.getElementById('confindence').innerHTML = 'confindence: ' + Math.round (results [0] .confidence*100) + '%';
+    document.getElementById('confidence').innerHTML = 'confidence: ' + Math.round (results [0] .confidence*100) + '%';
     utterThis = new SpeechSynthesisUtterance(results[0].label);
     synth.speak(utterThis);
 
